@@ -13,6 +13,18 @@ An Obsidian plugin that lets you read `.html` and `.htm` files directly in your 
 - **Dark mode support** — automatically injects dark-mode-friendly styles so HTML pages look comfortable in dark themes.
 - **Cross-platform** — uses a sandboxed `<iframe>` on desktop and a Shadow DOM renderer on mobile.
 
+## Setup
+
+Before using the plugin, Obsidian needs to be configured to detect and display non-markdown file types.
+
+### 1. Enable HTML file detection
+
+Go to **Settings → Files and links → Show all file types**. Turn this on so Obsidian recognizes `.html` and `.htm` files in your vault.
+
+### 2. Sync HTML files (Obsidian Sync users)
+
+If you use Obsidian Sync, go to **Settings → Sync → Selective sync** and enable **Sync all other types**. This ensures your HTML files are synced across devices.
+
 ## Installation
 
 ### From community plugins
