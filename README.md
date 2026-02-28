@@ -1,10 +1,10 @@
-# HTML Reader
+# Lightweight HTML Reader
 
-An Obsidian plugin that lets you read `.html` and `.htm` files directly in your vault.
+An Obsidian plugin that lets you read `.htm` and `.html` files directly in your vault.
 
 ## Features
 
-- **Native HTML rendering** — open HTML/HTM files as a tab, just like markdown notes.
+- **Native HTML rendering** — open HTM/HTML files as a tab. No external dependencies
 - **Configurable security modes** — choose how aggressively content is sanitized:
   - **Restricted** — strips scripts, styles, forms, iframes, and inline event handlers.
   - **Balanced** (default) — strips scripts and dangerous elements but preserves CSS styles.
@@ -13,13 +13,14 @@ An Obsidian plugin that lets you read `.html` and `.htm` files directly in your 
 - **Dark mode support** — automatically injects dark-mode-friendly styles so HTML pages look comfortable in dark themes.
 - **Cross-platform** — uses a sandboxed `<iframe>` on desktop and a Shadow DOM renderer on mobile.
 
+
 ## Setup
 
 Before using the plugin, Obsidian needs to be configured to detect and display non-markdown file types.
 
 ### 1. Enable HTML file detection
 
-Go to **Settings → Files and links → Show all file types**. Turn this on so Obsidian recognizes `.html` and `.htm` files in your vault.
+Go to **Settings → Files and links → Show all file types**. Turn this on so Obsidian recognizes `.htm` and `.html` files in your vault.
 
 ### 2. Sync HTML files (Obsidian Sync users)
 
