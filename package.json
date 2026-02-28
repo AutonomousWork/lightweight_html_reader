@@ -1,7 +1,7 @@
 {
-	"name": "obsidian-sample-plugin",
+	"name": "obsidian-html-reader",
 	"version": "1.0.0",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+	"description": "Read HTML and HTM files natively within Obsidian.",
 	"main": "main.js",
 	"type": "module",
 	"scripts": {

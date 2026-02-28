@@ -1,8 +1,19 @@
-/*
+.html-reader-container {
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	position: relative;
+}
 
-This CSS file will be included with your plugin, and
-available in the app when your plugin is enabled.
+.html-reader-iframe {
+	width: 100%;
+	height: 100%;
+	border: none;
+	background: transparent;
+}
 
-If your plugin does not need CSS, delete this file.
-
-*/
+.html-reader-shadow-host {
+	width: 100%;
+	min-height: 100%;
+	overflow: auto;
+}
