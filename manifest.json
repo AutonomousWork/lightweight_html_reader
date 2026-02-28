@@ -3,8 +3,8 @@
 	"name": "Lightweight HTML Reader",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "Read HTML and HTM files natively within Obsidian.",
+	"description": "Read HTM and HTML files natively within Obsidian.",
 	"author": "Autonomous Work",
-	"authorUrl": "",
+	"authorUrl": "https://x.com/AutonomousWork",
 	"isDesktopOnly": false
 }
