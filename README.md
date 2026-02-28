@@ -30,7 +30,7 @@ If you use Obsidian Sync, go to **Settings → Sync → Selective sync** and ena
 
 ### From community plugins
 
-Search for **HTML Reader** in **Settings → Community plugins → Browse** and install.
+Search for **Lightweight HTML Reader** in **Settings → Community plugins → Browse** and install.
 
 ### Manual
 
