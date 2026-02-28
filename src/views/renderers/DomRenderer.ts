@@ -21,24 +21,38 @@ export class DomRenderer {
 		const shadowHost = container.createDiv({cls: "html-reader-shadow-host"});
 		const shadow = shadowHost.attachShadow({mode: "open"});
 
-		if (settings.darkModeSupport) {
-			const sheet = new CSSStyleSheet();
-			sheet.replaceSync(DARK_MODE_SHADOW_CSS);
-			shadow.adoptedStyleSheets = [sheet];
-		}
-
 		const parser = new DOMParser();
 		let doc: Document;
 
 		if (settings.securityMode === SecurityMode.Unrestricted) {
-			// Parse directly and strip only scripts for DOM safety.
-			// Avoids the serialize→re-parse round-trip that can lose style elements.
 			doc = parser.parseFromString(html, "text/html");
 			doc.querySelectorAll("script").forEach(el => el.remove());
 		} else {
 			const sanitized = sanitizeHtml(html, settings);
 			doc = parser.parseFromString(sanitized, "text/html");
 		}
+
+		// Extract <style> elements into adoptedStyleSheets.
+		// Obsidian strips <style> DOM nodes (no-forbidden-elements); adopted sheets bypass this.
+		const sheets: CSSStyleSheet[] = [];
+		if (settings.darkModeSupport) {
+			const darkSheet = new CSSStyleSheet();
+			darkSheet.replaceSync(DARK_MODE_SHADOW_CSS);
+			sheets.push(darkSheet);
+		}
+		for (const style of Array.from(doc.querySelectorAll("style"))) {
+			let css = style.textContent ?? "";
+			// :root and body selectors have no target in shadow DOM; remap to :host
+			css = css.replace(/:root/g, ":host");
+			css = css.replace(/(^|[\s,}])body(?=\s*\{)/gm, "$1:host");
+			try {
+				const sheet = new CSSStyleSheet();
+				sheet.replaceSync(css);
+				sheets.push(sheet);
+			} catch { /* skip unparseable CSS */ }
+			style.remove();
+		}
+		shadow.adoptedStyleSheets = sheets;
 
 		const wrapper = document.createElement("div");
 		for (const node of Array.from(doc.head.childNodes)) {
