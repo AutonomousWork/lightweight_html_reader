@@ -37,6 +37,9 @@ export class DomRenderer {
 		const parser = new DOMParser();
 		const parsed = parser.parseFromString(sanitized, "text/html");
 		const wrapper = document.createElement("div");
+		for (const style of Array.from(parsed.head.querySelectorAll("style"))) {
+			wrapper.appendChild(style);
+		}
 		while (parsed.body.firstChild) {
 			wrapper.appendChild(parsed.body.firstChild);
 		}
