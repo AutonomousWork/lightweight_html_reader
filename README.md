@@ -58,7 +58,6 @@ npm run build    # production build
 | Allow scripts | Allow JS execution in unrestricted mode (desktop only) | Off |
 | Dark mode support | Inject dark mode styles into rendered HTML | On |
 
-![Plugin settings](screenshots/settings.png)
 
 ## License
 
