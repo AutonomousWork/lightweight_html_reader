@@ -2,6 +2,8 @@
 
 An Obsidian plugin that lets you read `.htm` and `.html` files directly in your vault.
 
+![HTML file rendered in Obsidian](screenshots/reader.png)
+
 ## Features
 
 - **Native HTML rendering** — open HTM/HTML files as a tab. No external dependencies
@@ -55,6 +57,8 @@ npm run build    # production build
 | Security mode | Controls HTML sanitization level (Restricted / Balanced / Unrestricted) | Balanced |
 | Allow scripts | Allow JS execution in unrestricted mode (desktop only) | Off |
 | Dark mode support | Inject dark mode styles into rendered HTML | On |
+
+![Plugin settings](screenshots/settings.png)
 
 ## License
 
