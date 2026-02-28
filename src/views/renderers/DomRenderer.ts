@@ -29,13 +29,17 @@ export class DomRenderer {
 		const sanitized = sanitizeHtml(html, mobileSettings);
 
 		if (settings.darkModeSupport) {
-			const style = document.createElement("style");
-			style.textContent = DARK_MODE_SHADOW_CSS;
-			shadow.appendChild(style);
+			const sheet = new CSSStyleSheet();
+			sheet.replaceSync(DARK_MODE_SHADOW_CSS);
+			shadow.adoptedStyleSheets = [sheet];
 		}
 
+		const parser = new DOMParser();
+		const parsed = parser.parseFromString(sanitized, "text/html");
 		const wrapper = document.createElement("div");
-		wrapper.innerHTML = sanitized;
+		while (parsed.body.firstChild) {
+			wrapper.appendChild(parsed.body.firstChild);
+		}
 		shadow.appendChild(wrapper);
 	}
 }
