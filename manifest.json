@@ -1,10 +1,10 @@
 {
-	"id": "html-reader",
-	"name": "HTML Reader",
+	"id": "lightweight-html-reader",
+	"name": "Lightweight HTML Reader",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
 	"description": "Read HTML and HTM files natively within Obsidian.",
-	"author": "",
+	"author": "Autonomous Work",
 	"authorUrl": "",
 	"isDesktopOnly": false
 }

@@ -21,13 +21,6 @@ export class DomRenderer {
 		const shadowHost = container.createDiv({cls: "html-reader-shadow-host"});
 		const shadow = shadowHost.attachShadow({mode: "open"});
 
-		// Always sanitize on mobile — scripts must never run via DOM insertion.
-		// Force at least Balanced mode even if user selected Unrestricted.
-		const mobileSettings = settings.securityMode === SecurityMode.Unrestricted
-			? {...settings, securityMode: SecurityMode.Balanced}
-			: settings;
-		const sanitized = sanitizeHtml(html, mobileSettings);
-
 		if (settings.darkModeSupport) {
 			const sheet = new CSSStyleSheet();
 			sheet.replaceSync(DARK_MODE_SHADOW_CSS);
@@ -35,13 +28,24 @@ export class DomRenderer {
 		}
 
 		const parser = new DOMParser();
-		const parsed = parser.parseFromString(sanitized, "text/html");
-		const wrapper = document.createElement("div");
-		for (const style of Array.from(parsed.head.querySelectorAll("style"))) {
-			wrapper.appendChild(style);
+		let doc: Document;
+
+		if (settings.securityMode === SecurityMode.Unrestricted) {
+			// Parse directly and strip only scripts for DOM safety.
+			// Avoids the serialize→re-parse round-trip that can lose style elements.
+			doc = parser.parseFromString(html, "text/html");
+			doc.querySelectorAll("script").forEach(el => el.remove());
+		} else {
+			const sanitized = sanitizeHtml(html, settings);
+			doc = parser.parseFromString(sanitized, "text/html");
 		}
-		while (parsed.body.firstChild) {
-			wrapper.appendChild(parsed.body.firstChild);
+
+		const wrapper = document.createElement("div");
+		for (const node of Array.from(doc.head.childNodes)) {
+			wrapper.appendChild(node);
+		}
+		while (doc.body.firstChild) {
+			wrapper.appendChild(doc.body.firstChild);
 		}
 		shadow.appendChild(wrapper);
 	}
