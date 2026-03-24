@@ -1,6 +1,6 @@
 # Lightweight HTML Reader
 
-An Obsidian plugin that lets you read `.htm` and `.html` files directly in your vault.
+An Obsidian plugin that lets you read `.htm` and `.html` files directly in your vaults. 
 
 ![HTML file rendered in Obsidian](screenshots/reader.png)
 
