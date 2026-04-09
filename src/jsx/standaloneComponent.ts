@@ -59,7 +59,7 @@ function createRuntimeRequire(filePath: string): (specifier: string) => unknown 
 	return (specifier: string) => {
 		switch (specifier) {
 			case "react":
-				return React;
+				return createReactRuntimeModule();
 			case "react/jsx-dev-runtime":
 				return ReactJsxDevRuntime;
 			case "react/jsx-runtime":
@@ -69,6 +69,13 @@ function createRuntimeRequire(filePath: string): (specifier: string) => unknown 
 					`Unsupported import "${specifier}" in ${filePath}. Standalone JSX files can only import from "react".`,
 				);
 		}
+	};
+}
+
+function createReactRuntimeModule(): typeof React & {default: typeof React} {
+	return {
+		...React,
+		default: React,
 	};
 }
 
