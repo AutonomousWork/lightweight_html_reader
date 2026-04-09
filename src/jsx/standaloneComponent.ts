@@ -27,7 +27,7 @@ function compileComponentSource(source: string, filePath: string): string {
 				: ["imports", "jsx"],
 			jsxImportSource: "react",
 			jsxRuntime: "automatic",
-			production: false,
+			production: true,
 		}).code;
 	} catch (error) {
 		throw new Error(`Could not compile ${filePath}: ${formatError(error)}`);
