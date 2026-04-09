@@ -1,9 +1,9 @@
-import React, {type ElementType, type ReactElement} from "react";
-import * as ReactJsxDevRuntime from "react/jsx-dev-runtime";
-import * as ReactJsxRuntime from "react/jsx-runtime";
+import type {ComponentType, VNode} from "preact";
+import ReactCompat from "preact/compat";
+import * as ReactJsxRuntime from "preact/jsx-runtime";
 import {transform} from "sucrase";
 
-export type StandaloneComponentEntry = ElementType | ReactElement;
+export type StandaloneComponentEntry = ComponentType | VNode;
 
 const REACT_COMPONENT_SYMBOLS = new Set([
 	Symbol.for("react.forward_ref"),
@@ -61,7 +61,7 @@ function createRuntimeRequire(filePath: string): (specifier: string) => unknown 
 			case "react":
 				return createReactRuntimeModule();
 			case "react/jsx-dev-runtime":
-				return ReactJsxDevRuntime;
+				return ReactJsxRuntime;
 			case "react/jsx-runtime":
 				return ReactJsxRuntime;
 			default:
@@ -72,10 +72,10 @@ function createRuntimeRequire(filePath: string): (specifier: string) => unknown 
 	};
 }
 
-function createReactRuntimeModule(): typeof React & {default: typeof React} {
+function createReactRuntimeModule(): typeof ReactCompat & {default: typeof ReactCompat} {
 	return {
-		...React,
-		default: React,
+		...ReactCompat,
+		default: ReactCompat,
 	};
 }
 
@@ -105,7 +105,7 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 }
 
 function isRenderableEntry(value: unknown): value is StandaloneComponentEntry {
-	if (typeof value === "function" || React.isValidElement(value)) {
+	if (typeof value === "function" || ReactCompat.isValidElement(value)) {
 		return true;
 	}
 

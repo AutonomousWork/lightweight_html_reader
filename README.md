@@ -13,7 +13,7 @@ An Obsidian plugin that lets you read `.htm`, `.html`, `.jsx`, and `.tsx` files 
   - **Balanced** (default) — strips scripts and dangerous elements but preserves CSS styles.
   - **Unrestricted** — renders HTML as-is with no sanitization.
 - **Optional script execution** — in unrestricted mode, you can allow JavaScript to run for sandboxed HTML rendering and standalone JSX/TSX components.
-- **Local-only JSX runtime** — bundles React and a small JSX transformer so standalone component files render without a remote service or external build step.
+- **Local-only JSX runtime** — bundles a React-compatible runtime and a small JSX transformer so standalone component files render without a remote service or external build step.
 - **Dark mode support** — automatically injects dark-mode-friendly styles so HTML pages look comfortable in dark themes.
 - **Cross-platform** — HTML uses a sandboxed `<iframe>` on desktop and a Shadow DOM renderer on mobile, while JSX and TSX files render through a local React root.
 
@@ -62,7 +62,7 @@ npm run build    # production build
 
 ## JSX and TSX files
 
-Standalone JSX and TSX files are rendered locally with React when they export a component or a React element. To run them:
+Standalone JSX and TSX files are rendered locally with a React-compatible runtime when they export a component or a React element. To run them:
 
 1. Set **Security mode** to **Unrestricted**.
 2. Turn on **Allow scripts**.

@@ -1,5 +1,6 @@
-import React, {type ErrorInfo, type ReactNode} from "react";
-import {createRoot, type Root} from "react-dom/client";
+import {render} from "preact";
+import type {ComponentChildren} from "preact";
+import ReactCompat from "preact/compat";
 import {SecurityMode} from "../../constants";
 import {loadStandaloneComponent} from "../../jsx/standaloneComponent";
 import {MESSAGE_STYLES, renderMessage} from "./renderMessage";
@@ -48,14 +49,14 @@ canvas {
 `;
 
 interface BoundaryProps {
-	children: ReactNode;
+	children: ComponentChildren;
 }
 
 interface BoundaryState {
 	error: Error | null;
 }
 
-class ComponentErrorBoundary extends React.Component<BoundaryProps, BoundaryState> {
+class ComponentErrorBoundary extends ReactCompat.Component<BoundaryProps, BoundaryState> {
 	constructor(props: BoundaryProps) {
 		super(props);
 		this.state = {error: null};
@@ -65,29 +66,29 @@ class ComponentErrorBoundary extends React.Component<BoundaryProps, BoundaryStat
 		return {error};
 	}
 
-	componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+	componentDidCatch(error: Error, errorInfo: unknown): void {
 		console.error("Lightweight HTML Reader failed to render a JSX component.", error, errorInfo);
 	}
 
-	render(): ReactNode {
+	render(): ComponentChildren {
 		if (!this.state.error) {
 			return this.props.children;
 		}
 
-		return React.createElement(
+		return ReactCompat.createElement(
 			"div",
 			{className: "html-reader-message html-reader-message-error"},
-			React.createElement(
+			ReactCompat.createElement(
 				"h3",
 				{className: "html-reader-message-title"},
 				"Component render failed",
 			),
-			React.createElement(
+			ReactCompat.createElement(
 				"p",
 				{className: "html-reader-message-body"},
 				"The JSX file loaded, but the component threw an error while rendering.",
 			),
-			React.createElement(
+			ReactCompat.createElement(
 				"pre",
 				{className: "html-reader-message-details"},
 				this.state.error.message,
@@ -97,7 +98,7 @@ class ComponentErrorBoundary extends React.Component<BoundaryProps, BoundaryStat
 }
 
 export class JsxRenderer {
-	private root: Root | null = null;
+	private mountEl: HTMLElement | null = null;
 
 	render(container: HTMLElement, source: string, context: RenderContext): void {
 		this.dispose();
@@ -127,16 +128,17 @@ export class JsxRenderer {
 			const mountEl = shadowRoot.ownerDocument.createElement("div");
 			mountEl.className = "jsx-reader-root";
 			shadowRoot.appendChild(mountEl);
+			this.mountEl = mountEl;
 
-			this.root = createRoot(mountEl);
-			this.root.render(
-				React.createElement(
+			render(
+				ReactCompat.createElement(
 					ComponentErrorBoundary,
 					null,
-					React.isValidElement(entry)
+					ReactCompat.isValidElement(entry)
 						? entry
-						: React.createElement(entry),
+						: ReactCompat.createElement(entry as never, null),
 				),
+				mountEl,
 			);
 		} catch (error) {
 			console.error("Lightweight HTML Reader could not load a JSX component.", error);
@@ -151,9 +153,9 @@ export class JsxRenderer {
 	}
 
 	dispose(): void {
-		if (this.root) {
-			this.root.unmount();
-			this.root = null;
+		if (this.mountEl) {
+			render(null, this.mountEl);
+			this.mountEl = null;
 		}
 	}
 
