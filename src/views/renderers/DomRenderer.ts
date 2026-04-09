@@ -1,6 +1,7 @@
 import type {HtmlReaderSettings} from "../../settings";
 import {SecurityMode} from "../../constants";
 import {sanitizeHtml} from "../../sanitize";
+import type {RenderContext} from "./types";
 
 const DARK_MODE_SHADOW_CSS = `
 :host {
@@ -15,8 +16,9 @@ const DARK_MODE_SHADOW_CSS = `
 `;
 
 export class DomRenderer {
-	render(container: HTMLElement, html: string, settings: HtmlReaderSettings): void {
+	render(container: HTMLElement, html: string, context: RenderContext): void {
 		container.empty();
+		const settings: HtmlReaderSettings = context.settings;
 
 		const shadowHost = container.createDiv({cls: "html-reader-shadow-host"});
 		const shadow = shadowHost.attachShadow({mode: "open"});

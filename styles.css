@@ -17,3 +17,40 @@
 	min-height: 100%;
 	overflow: auto;
 }
+
+.jsx-reader-shadow-host {
+	height: 100%;
+}
+
+.html-reader-message {
+	margin: var(--size-4-4);
+	padding: var(--size-4-4);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+	background: var(--background-secondary);
+	color: var(--text-normal);
+}
+
+.html-reader-message-error {
+	border-color: var(--text-error);
+}
+
+.html-reader-message-title {
+	margin: 0 0 var(--size-2-2);
+	font-size: var(--font-ui-medium);
+	font-weight: 600;
+}
+
+.html-reader-message-body {
+	margin: 0;
+	line-height: var(--line-height-normal);
+}
+
+.html-reader-message-details {
+	margin: var(--size-3-2) 0 0;
+	white-space: pre-wrap;
+	word-break: break-word;
+	font-family: var(--font-monospace);
+	font-size: var(--font-ui-small);
+	color: var(--text-muted);
+}

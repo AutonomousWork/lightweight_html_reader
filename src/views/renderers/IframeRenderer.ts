@@ -1,6 +1,7 @@
 import {SecurityMode} from "../../constants";
 import type {HtmlReaderSettings} from "../../settings";
 import {sanitizeHtml} from "../../sanitize";
+import type {RenderContext} from "./types";
 
 const DARK_MODE_CSS = `<style data-html-reader-dark>
 :root { color-scheme: light dark; }
@@ -11,8 +12,9 @@ const DARK_MODE_CSS = `<style data-html-reader-dark>
 </style>`;
 
 export class IframeRenderer {
-	render(container: HTMLElement, html: string, settings: HtmlReaderSettings): void {
+	render(container: HTMLElement, html: string, context: RenderContext): void {
 		container.empty();
+		const settings: HtmlReaderSettings = context.settings;
 
 		const iframe = container.createEl("iframe", {
 			cls: "html-reader-iframe",

@@ -1,5 +1,5 @@
 import {Plugin, WorkspaceLeaf} from "obsidian";
-import {VIEW_TYPE_HTML, HTML_EXTENSIONS} from "./constants";
+import {VIEW_TYPE_HTML, SUPPORTED_EXTENSIONS} from "./constants";
 import {HtmlFileView} from "./views/HtmlFileView";
 import {DEFAULT_SETTINGS, HtmlReaderSettingTab} from "./settings";
 import type {HtmlReaderSettings} from "./settings";
@@ -14,7 +14,7 @@ export default class HtmlReaderPlugin extends Plugin {
 			return new HtmlFileView(leaf, this.settings);
 		});
 
-		this.registerExtensions(HTML_EXTENSIONS, VIEW_TYPE_HTML);
+		this.registerExtensions([...SUPPORTED_EXTENSIONS], VIEW_TYPE_HTML);
 
 		this.addSettingTab(new HtmlReaderSettingTab(this.app, this));
 	}

@@ -28,7 +28,7 @@ export class HtmlReaderSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName("Security mode")
-			.setDesc("Controls how HTML content is sanitized before rendering.")
+			.setDesc("Controls how HTML content is sanitized before rendering. Component files such as .jsx and .tsx require unrestricted mode because they execute local code.")
 			.addDropdown(dropdown => dropdown
 				.addOption(SecurityMode.Restricted, "Restricted (strip scripts and styles)")
 				.addOption(SecurityMode.Balanced, "Balanced (strip scripts, keep styles)")
@@ -40,10 +40,14 @@ export class HtmlReaderSettingTab extends PluginSettingTab {
 					this.display();
 				}));
 
+		new Setting(containerEl)
+			.setName("React component files")
+			.setDesc("Standalone .jsx and .tsx files are supported when security mode is unrestricted and allow scripts is enabled.");
+
 		if (this.plugin.settings.securityMode === SecurityMode.Unrestricted) {
 			new Setting(containerEl)
 				.setName("Allow scripts")
-				.setDesc("Allow JavaScript execution in HTML files. Only applies on desktop in unrestricted mode. Use with caution.")
+				.setDesc("Allow JavaScript execution in unrestricted HTML files and standalone .jsx or .tsx components. Use with caution and only for files you trust.")
 				.addToggle(toggle => toggle
 					.setValue(this.plugin.settings.allowScripts)
 					.onChange(async (value) => {
